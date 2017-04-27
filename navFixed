@@ -28,3 +28,4 @@ $.fn.navFixed = function(){
 	}
 }
 
+//用法$('selector').navFixed;
