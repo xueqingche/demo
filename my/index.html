@@ -1,0 +1,1382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <style>
+        /*清除浮动
+        1.给要清除浮动的元素添加一个clear的类名(class)即可
+        */
+
+        .clear::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+
+        .clear {
+            zoom: 1;
+        }
+
+        /*---------------------------水平垂直居中(注意这里只能给没有设置宽高的元素使用)--------------------------*/
+        /*.absolute {*/
+        /*position: absolute;*/
+        /*top: 50%;*/
+        /*left: 50%;*/
+        /*transform: translate(-50%, -50%);*/
+        /*-ms-transform: translate(-50%, -50%);*/
+        /*}*/
+
+        .box {
+            position: relative;
+        }
+
+        /*-------------------分割线---------------------*/
+        /*制作一个开关*/
+        label.switch {
+            display: inline-block;
+            position: relative;
+            width: 60px;
+            height: 34px;
+        }
+
+        .switch > input {
+            display: none;
+        }
+
+        .switch > .slider {
+            position: absolute;
+            cursor: pointer;
+            background-color: #ccc;
+            transition: .4s;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            /*width: 60px;*/
+            /*height: 34px;   */
+            /*注意这里为什么设置4个定位*/
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+        input:checked + .slider {
+            background-color: #2196f3;
+        }
+
+        input:checked + .slider:before {
+            -webkit-transform: translateX(26px);
+            -ms-transform: translateX(26px);
+            transform: translateX(26px);
+        }
+
+        /*----------------分割线---------------------*/
+        /*制作一个点击会动的按钮*/
+        .button {
+            padding: 15px 25px;
+            border: none;
+            outline: none;
+            color: #fff;
+            background-color: #4CAF50;
+            font-size: 24px;
+            border-radius: 15px;
+            box-shadow: 0 9px #999999;
+            /*box-shadow:水平偏移(可以为负) 竖直偏移(可以为负)  阴影(可以省略) 颜色*/
+        }
+
+        .button:hover {
+            background-color: #3e8e41
+        }
+
+        .button:active {
+            background-color: #3e8e41;
+            box-shadow: 0 5px #666;
+            transform: translateY(4px);
+        }
+
+        /*------------------分割线--------------------------*/
+        /*制作一个触摸会动的按钮*/
+        .hover {
+            padding: 20px;
+            border: none;
+            outline: none;
+            background-color: #ff630e;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            position: relative;
+            width: 200px;
+            transition: all 0.5s;
+        }
+
+        .hover > span {
+            position: relative;
+            transition: .5s;
+            display: inline-block;
+            left: 0;
+        }
+
+        .hover > span::after {
+            content: '\00bb';
+            position: absolute;
+            right: -30px;
+            transition: 0.5s;
+            display: inline-block;
+            opacity: 0;
+        }
+
+        .hover:hover > span {
+            /*transform: translateX(-25px);*/
+            left: -25px;
+            /*为什么不能这样写? */
+        }
+
+        .hover:hover > span::after {
+            transform: translateX(-10px);
+            opacity: 1;
+        }
+
+        /*-------------------分割线-----------------------*/
+        /*竖直手风琴效果*/
+        .accordion {
+            background-color: #eee;
+            color: #444;
+            cursor: pointer;
+            padding: 18px;
+            width: 100%;
+            text-align: left;
+            border: none;
+            outline: none;
+            transition: 0.5s;
+        }
+
+        div.panel {
+            padding: 0 18px;
+            background-color: white;
+            height: 0;
+            transition: .5s;
+            overflow: hidden;
+            margin-bottom: 0;
+            border: none;
+        }
+
+        /*div.open{*/
+        /*height: 80px;*/
+        /*}*/
+        div.panel > p {
+            margin: 0;
+            padding: 10px 0;
+        }
+
+        button.accordion::after {
+            content: '\02795'; /* Unicode character for "plus" sign (+) */
+            font-size: 13px;
+            color: #777;
+            float: right;
+            margin-left: 5px;
+        }
+
+        button.accordion.active::after {
+            content: "\2796"; /* Unicode character for "minus" sign (-) */
+        }
+
+        /*-------------------分割线--------------------*/
+        /*制作水平标签*/
+        .tab {
+            overflow: hidden;
+            border: 1px solid #ccc;
+            background-color: #f1f1f1;
+        }
+
+        .buttonlist .tablinks {
+            background-color: #f1f1f1;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.5s;
+            font-size: 17px;
+        }
+
+        .buttonlist .active {
+            background-color: #aaa;
+            transition: .5s;
+        }
+
+        .tabcontent {
+            padding: 6px 12px;
+            border: 1px solid #ccc;
+            border-top: none;
+            display: none;
+            transition: .3s;
+        }
+
+        /*测试动画的*/
+        /*-------------------分割线--------------------*/
+
+        #animate {
+            position: absolute;
+            left: 800px;
+            top: 500px;
+            background-color: skyblue;
+            width: 50px;
+            height: 50px;
+            display: none;
+            z-index: 1;
+        }
+
+        #move {
+            padding: 15px;
+            border: none;
+            background-color: #ff630e;
+            color: white;
+            font-size: 18px;
+        }
+
+        #animate.move {
+            animation: move 2s linear;
+            display: block;
+        }
+
+        @keyframes move {
+            from {
+                left: 100px;
+                opacity: 0;
+            }
+            to {
+                left: 800px;
+                opacity: 1;
+            }
+        }
+
+        /*测试碰撞的*/
+        /*-------------------分割线--------------------*/
+        #q {
+            width: 500px;
+            height: 280px;
+            background-color: black;
+            position: relative;
+            overflow: hidden;
+            margin: 0 auto;
+            margin-top: 100px;
+        }
+
+        #q1 {
+            position: absolute;
+            width: 500px;
+            height: 200px;
+            background-color: yellow;
+            left: 0;
+            top: 0;
+        }
+
+        #q2 {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-color: blue;
+            left: 150px;
+            top: 80px;
+        }
+
+        #q3 {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-color: deepskyblue;
+            left: 250px;
+            top: 100px;
+        }
+
+        /*垂直标签*/
+        /*-------------------分割线--------------------*/
+        div.tab1 {
+            float: left;
+            border: 1px solid #ccc;
+            background-color: #f1f1f1;
+            width: 20%;
+            height: 300px;
+        }
+
+        div.tab1 > button {
+            display: block;
+            background-color: inherit;
+            font-weight: bold;
+            color: red;
+            padding: 22px 16px;
+            width: 100%;
+            border: none;
+            outline: none;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        div.tab1 > button:hover {
+            background-color: #ddd;
+        }
+
+        div.tab1 > button.active {
+            background-color: #ccc;
+        }
+
+        .tabcontent1 {
+            float: left;
+            padding: 0 12px;
+            border: 1px solid #ccc;
+            width: 50%;
+            border-left: none;
+            height: 300px;
+            display: none;
+        }
+
+        /*--------------------------搜索列表-------------------------------*/
+        #myInput {
+            width: 100%; /* Full-width */
+            font-size: 16px; /* Increase font-size */
+            padding: 12px 20px 12px 40px; /* Add some padding */
+            border: 1px solid #ddd; /* Add a grey border */
+            margin-bottom: 12px; /* Add some space below the input */
+        }
+
+        #myUL {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        #myUL li a {
+            border: 1px solid #ddd; /* Add a border to all links */
+            margin-top: -1px; /* Prevent double borders */
+            background-color: #f6f6f6; /* Grey background color */
+            padding: 12px; /* Add some padding */
+            text-decoration: none; /* Remove default text underline */
+            font-size: 18px; /* Increase the font-size */
+            color: black; /* Add a black text color */
+            display: block; /* Make it into a block element to fill the whole list */
+            transition: 0.5s;
+            pointer-events: none;
+        }
+
+        #myUL li a.header {
+            background-color: #e2e2e2; /* Add a darker background color for headers */
+            cursor: default; /* Change cursor style */
+        }
+
+        #myUL li a:hover:not(.header) { /* 注意这里的选择器写法*/
+            background-color: #eee; /* Add a hover effect to all links, except for headers */
+        }
+
+        /*--------------------------do-list-------------------------------*/
+        #myUL1 {
+            padding: 0;
+            margin: 0;
+        }
+
+        #myUL1 > li {
+            cursor: pointer;
+            position: relative;
+            padding: 12px 8px 12px 40px;
+            background: #eee;
+            font-size: 18px;
+            transition: 0.2s;
+            border-bottom: 1px solid white;
+        }
+
+        #myInput1 {
+            color: black;
+        }
+
+        #myUL1 > li:nth-child(odd) {
+            background: #f9f9f9;
+        }
+
+        #myUL1 > li:hover {
+            background-color: #ddd;
+        }
+
+        #myUL1 > li.checked {
+            background: #CCCCCC;
+            color: #fff;
+            text-decoration: line-through;
+        }
+
+        #myUL1 > li.checked::before {
+            content: '';
+            position: absolute;
+            border-color: red; /*这是一个对勾   利用伪元素在前面生成一个对勾*/
+            border-style: solid;
+            border-width: 0 2px 2px 0;
+            top: 10px;
+            left: 16px;
+            transform: rotate(45deg);
+            height: 15px;
+            width: 7px;
+        }
+
+        .close {
+            position: absolute;
+            right: 0;
+            top: 0;
+            padding: 12px 16px 12px 16px;
+            opacity: 0.8;
+        }
+
+        .close:hover {
+            background-color: #f44336;
+            color: white;
+            opacity: 1;
+        }
+
+        .header {
+            background-color: #f44336;
+            padding: 30px 40px;
+            color: white;
+            text-align: center;
+        }
+
+        .header > input {
+            border: none;
+            width: 75%;
+            padding: 10px;
+            float: left;
+            font-size: 16px;
+        }
+
+        .header > .addBtn {
+            padding: 10px;
+            width: 20%;
+            background: #d9d9d9;
+            color: #555;
+            float: left;
+            text-align: center;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+            transform: translateY(-1px);
+        }
+
+        .addBtn:hover {
+            background-color: #bbb;
+        }
+
+        #myprogress {
+            display: inline-block;
+            color: red;
+            font-size: 18px;
+            padding: 5px 0;
+            margin-left: 20px;
+        }
+
+        /*--------------------------排序列表-------------------------------*/
+        #id01 {
+            background-color: #d9d9d9;
+        }
+
+        #id01 > li {
+            padding: 10px;
+            padding-left: 0;
+            margin-left: 20px;
+            font-size: 18px;
+        }
+
+        .sort {
+            padding: 15px 25px;
+            border: none;
+            outline: none;
+            color: #fff;
+            background-color: #4CAF50;
+            font-size: 24px;
+            border-radius: 15px;
+            box-shadow: 0 9px #999999;
+            margin-bottom: 10px;
+        }
+
+        /*--------------------------技能栏的制作-------------------------------*/
+        #skill {
+            width: 80%;
+            padding-left: 10px;
+            margin: 0 auto;
+        }
+
+        .container {
+            width: 100%;
+            background-color: #ddd;
+            padding: 0;
+        }
+
+        .skills {
+            text-align: right;
+            padding-right: 20px;
+            line-height: 40px;
+            color: white;
+        }
+
+        .html {
+            width: 90%;
+            background-color: #4CAF50;
+        }
+
+        .css {
+            width: 80%;
+            background-color: #2196F3;
+        }
+
+        .js {
+            width: 65%;
+            background-color: #f44336;
+        }
+
+        .php {
+            width: 60%;
+            background-color: #808080;
+        }
+
+        p.skill {
+            padding-left: 20px;
+            font-size: 18px;
+        }
+
+        /*--------------------------加载程序-------------------------------*/
+
+        div.loader {
+            display: inline-block;
+            border-radius: 100%;
+            border: 10px solid #f3f3f3;
+            border-left: 10px solid deepskyblue;
+            width: 120px;
+            height: 120px;
+            animation: spin 2s linear infinite;
+            margin: 20px;
+        }
+
+        div.loader1 {
+            border-top: 10px solid blue;
+            border-right: 10px solid green;
+            border-bottom: 10px solid red;
+        }
+
+        div.loader2 {
+            border-top: 10px solid blue;
+            border-right: 10px solid green;
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /*-----------------------创建侧导航-------------------------------*/
+        #slidenav > button {
+            padding: 8px 16px;
+            background: #4caf50;
+            border: none;
+            outline: none;
+            display: block;
+            color: white;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .overlay > a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #818181;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .overlay > a:hover {
+            color: #f1f1f1;
+        }
+
+        .overlay > .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+
+        .overlay {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: #111;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+
+        .overlay1 {
+            display: none;
+            width: 20%;
+        }
+
+        /*-----------------------创建搜索栏-------------------------------*/
+        input[name=search] {
+            display: block;
+            margin: 0 auto;
+            width: 130px;
+            box-sizing: border-box;
+            border: 2px solid #ccc;
+            border-radius: 15px;
+            font-size: 16px;
+            background-color: white;
+            background: url('imags/searchicon.png') 0 0 no-repeat;
+            background-position: 10px 10px;
+            padding: 12px 20px 12px 40px;
+            -webkit-transition: width 0.4s ease-in-out;
+            transition: width 0.4s ease-in-out;
+        }
+
+        input[name=search]:focus {
+            width: 100%;
+        }
+
+        /*-----------------------响应式布局-------------------------------*/
+
+        .col-container {
+            display: table;
+            width: 100%;
+        }
+
+        .col {
+            display: table-cell;
+            padding: 16px;
+        }
+
+        @media only screen and (max-width: 600px) {
+            .col {
+                display: block;
+                width: 100%;
+            }
+        }
+
+        /*-----------------------显示小吃店-------------------------------*/
+
+        #snackbar {
+            opacity: 0;
+            min-width: 250px; /* Set a default minimum width */
+            margin-left: -125px; /* Divide value of min-width by 2 */
+            background-color: #333; /* Black background color */
+            color: #fff; /* White text color */
+            text-align: center; /* Centered text */
+            border-radius: 2px; /* Rounded borders */
+            padding: 16px; /* Padding */
+            position: fixed; /* Sit on top of the screen */
+            z-index: 100; /* Add a z-index if needed */
+            left: 50%; /* Center the snackbar */
+        }
+
+        #snackbar.show {
+            animation: snackbar 1s;
+            bottom: 10%;
+            opacity: 1;
+        }
+
+        @keyframes snackbar {
+            from {
+                bottom: 0;
+                opacity: 0;
+            }
+            to {
+                bottom: 10%;
+                opacity: 1;
+            }
+        }
+
+        /*-----------------------SVG-------------------------------*/
+
+        #svg {
+            animation: svg1 2s linear infinite;
+            transform-origin: center;
+        }
+
+        #svg:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes svg1 {
+            from {
+                transform: rotateZ(0deg);
+            }
+            to {
+                transform: rotateZ(360deg);
+            }
+        }
+
+        #rect {
+            transform-origin: center;
+            transition: 1s;
+            z-index: 1;
+        }
+
+        #rect:hover {
+            transform: rotateZ(360deg) scale(1.5);
+        }
+
+        #ball {
+            animation: ball 5s linear infinite;
+        }
+
+        @keyframes ball {
+            25% {
+                transform: translateX(400px);
+            }
+            50% {
+                transform: translateX(0);
+            }
+            75% {
+                transform: translateX(-400px);
+            }
+            100% {
+                transform: translateX(0);
+            }
+        }
+
+        /*-----------------------nav-fix-------------------------------*/
+
+        .movefix {
+            width: 100px;
+            height: 200px;
+            position: absolute;
+            background: lime;
+            left: 100px;
+            top: 100px;
+            transition: top 1s;
+        }
+
+        .movefix > span {
+            font-size: 25px;
+            padding: 5px;
+            color: #010101;
+            float: right;
+            transform: translateY(-10px);
+        }
+
+        .movefix > span:hover {
+            color: white;
+        }
+
+
+    </style>
+</head>
+<body>
+<!--制作一个开关按钮-->
+<label class="switch">
+    <input type="checkbox">
+    <div class="slider"></div>
+</label>
+<!------------------分割线---------------------->
+<!--点击会动的按钮-->
+<button class="button">点我</button>
+<!--触摸动画按钮-->
+<button class="hover"><span>Hover</span></button>
+<!-------------------分割线---------------------->
+<!--手风琴效果-->
+<div>
+    <button class="accordion">Section 1</button>
+    <div class="panel">
+        <p>Lorem ipsum dolor sit amet，consectetur adipisicing elit，sed do eiusmod tempor incididunt ut labore et dolore
+            magna aliqua。Ut im im。。。。。。。。。。。。。。。。。。。。。。。。。。</p>
+    </div>
+
+    <button class="accordion">Section 2</button>
+    <div class="panel">
+        <p>Lorem ipsum dolor sit amet，consectetur adipisicing elit，sed do eiusmod tempor incididunt ut labore et dolore
+            magna aliqua。Ut im im。。。。。。。。。。。。。。。。。。。。。。。。。。</p>
+    </div>
+
+    <button class="accordion">Section 3</button>
+    <div class="panel">
+        <p>Lorem ipsum dolor sit amet，consectetur adipisicing elit，sed do eiusmod tempor incididunt ut labore et dolore
+            magna aliqua。Ut im im</p>
+    </div>
+</div>
+
+<!--制作水平标签-->
+<!-------------------分割线---------------------->
+<div class="tab">
+    <div class="buttonlist clear">
+        <button class="tablinks">London</button>
+        <button class="tablinks">Paris</button>
+        <button class="tablinks">Tokyo</button>
+    </div>
+    <div id="London" class="tabcontent">
+        <h3>London</h3>
+        <p>London is the capital city of England.</p>
+    </div>
+    <div id="Paris" class="tabcontent">
+        <h3>Paris</h3>
+        <p>Paris is the capital of France.</p>
+    </div>
+    <div id="Tokyo" class="tabcontent">
+        <h3>Tokyo</h3>
+        <p>Tokyo is the capital of Japan.</p>
+    </div>
+</div>
+
+<!-----------------------分割线----------------------------------->
+<!--测试动画的-->
+<div id="animate"></div>
+<button id="move">开始动画</button>
+<!-----------------------分割线----------------------------------->
+
+<!----------------------测试碰撞的----------------------------------->
+<button class="left button">left</button>
+<button class="right button">right</button>
+<button class="pause button">pause</button>
+<div id="q">
+    <div id="q1">
+        <div id="q3"></div>
+    </div>
+    <div id="q2"></div>
+</div>
+<!---------------------------垂直标签----------------------------------->
+
+<div class="clear">
+    <div class="tab1">
+        <button class="tablinks">London</button>
+        <button class="tablinks">Paris</button>
+        <button class="tablinks">Tokyo</button>
+    </div>
+
+    <div id="London1" class="tabcontent1">
+        <h3>London</h3>
+        <p>London is the capital city of England.</p>
+    </div>
+
+    <div id="Paris1" class="tabcontent1">
+        <h3>Paris</h3>
+        <p>Paris is the capital of France.</p>
+    </div>
+
+    <div id="Tokyo1" class="tabcontent1">
+        <h3>Tokyo</h3>
+        <p>Tokyo is the capital of Japan.</p>
+    </div>
+</div>
+
+<!---------------------------搜索列表----------------------------------->
+<div>
+    <input type="text" id="myInput" placeholder="Search for names..">
+
+    <ul id="myUL">
+        <li><a href="#" class="header">A</a></li>
+        <li><a href="#">Adele</a></li>
+        <li><a href="#">Agnes</a></li>
+
+        <li><a href="#" class="header">B</a></li>
+        <li><a href="#">Billy</a></li>
+        <li><a href="#">Bob</a></li>
+
+        <li><a href="#" class="header">C</a></li>
+        <li><a href="#">Calvin</a></li>
+        <li><a href="#">Christina</a></li>
+        <li><a href="#">Cindy</a></li>
+    </ul>
+</div>
+
+<!--------------------------- do -list----------------------------------->
+<div>
+    <div id="myDIV" class="header clear">
+        <h2>My To Do List</h2>
+        <input type="text" id="myInput1" placeholder="添加新的do-list">
+        <span class="addBtn">Add</span>
+    </div>
+    <span id="myprogress">我的完成计划:</span>
+    <div class="progress">
+        <div class="progress-bar progress-bar-danger progress-bar-striped active" role="progressbar" aria-valuenow="80"
+             aria-valuemin="0" aria-valuemax="100" style=" min-width:3em">                   <!--设置最小宽度-->
+            50%
+        </div>
+    </div>
+    <ul id="myUL1">
+        <li>Hit the gym</li>
+        <li class="checked">Pay bills</li>
+        <li>Meet George</li>
+        <li>Buy eggs</li>
+        <li>Read a book</li>
+        <li>Organize office</li>
+    </ul>
+</div>
+<!---------------------------排序列表-------------------------------->
+<div>
+    <button id="sort1" class="sort">升序</button>
+    <button id="sort2" class="sort">降序</button>
+
+    <ul id="id01">
+        <li>Oslo</li>
+        <li>Stockholm</li>
+        <li>Helsinki</li>
+        <li>Berlin</li>
+        <li>Rome</li>
+        <li>Madrid</li>
+    </ul>
+</div>
+
+<!---------------------------技能栏-------------------------------->
+<div id="skill" class="box">
+    <p class="skill">HTML</p>
+    <div class="container">
+        <div class="skills html">90%</div>
+    </div>
+    <p class="skill">CSS</p>
+    <div class="container">
+        <div class="skills css">80%</div>
+    </div>
+
+    <p class="skill">JavaScript</p>
+    <div class="container">
+        <div class="skills js">65%</div>
+    </div>
+
+    <p class="skill">PHP</p>
+    <div class="container">
+        <div class="skills php">60%</div>
+    </div>
+</div>
+
+<!------------------------CSS加载程序------------------------>
+<div class="box">
+    <div class="loader"></div>
+    <div class="loader loader1"></div>
+    <div class="loader loader2"></div>
+</div>
+<!------------------------创建侧导航------------------------>
+<div>
+    <div id="slidenav" class="slidenav">
+        <button>Sidenav overlay</button>
+        <button>Sidenav overlay without animation</button>
+        <button>Sidenav push (off-canvas)</button>
+        <button>Sidenav push w/opacity</button>
+    </div>
+    <div id="overlay" class="overlay">
+        <a href="#" class="closebtn">&times;</a>
+        <a href="#">About</a>
+        <a href="#">Services</a>
+        <a href="#">Clients</a>
+        <a href="#">Contact</a>
+    </div>
+    <div class="overlay overlay1">
+        <a href="#" class="closebtn">&times;</a>
+        <a href="#">About</a>
+        <a href="#">Services</a>
+        <a href="#">Clients</a>
+        <a href="#">Contact</a>
+    </div>
+    <div class="overlay overlay2">
+        <a href="#" class="closebtn">&times;</a>
+        <a href="#">About</a>
+        <a href="#">Services</a>
+        <a href="#">Clients</a>
+        <a href="#">Contact</a>
+    </div>
+    <div class="overlay overlay3">
+        <a href="#" class="closebtn">&times;</a>
+        <a href="#">About</a>
+        <a href="#">Services</a>
+        <a href="#">Clients</a>
+        <a href="#">Contact</a>
+    </div>
+</div>
+
+<!------------------------搜索框------------------------>
+
+<div class="box">
+    <input type="text" name="search" placeholder="Search..">
+</div>
+
+<!------------------------响应式布局----------------------->
+<div class="box">
+    <h2>Responsive Equal Height Columns</h2>
+    <p>Resize the browser window to see the result. The columns will automatically stack on screens smaller than
+        600px.</p>
+
+    <div class="col-container">
+        <div class="col" style="background:orange">
+            <h2>Column 1</h2>
+            <p>Hello World</p>
+        </div>
+
+        <div class="col" style="background:yellow">
+            <h2>Column 2</h2>
+            <p>Hello World!</p>
+            <p>Hello World!</p>
+            <p>Hello World!</p>
+            <p>Hello World!</p>
+        </div>
+
+        <div class="col" style="background:orange">
+            <h2>Column 3</h2>
+            <p>Some other text..</p>
+            <p>Some other text..</p>
+        </div>
+    </div>
+</div>
+
+<!------------------------显示小吃店----------------------->
+
+<div class="box">
+    <!-- Use a button to open the snackbar -->
+    <button id="snackbar1" class="button">Show Snackbar</button>
+
+    <!-- The actual snackbar -->
+    <div id="snackbar">Some text some message..</div>
+</div>
+
+<!------------------------SVG----------------------->
+<svg width="100%" height="500" style="border:1px solid black">
+    <rect x="100" y="100" width="300" height="50" id="rect" style="fill:blue; stroke:red;stroke-width: 5;opacity: 0.5"/>
+    <circle cx="500" cy="200" r="50" id="ball" style="fill:lime ;stroke:black;stroke-width:2 "/>
+    <line x1="50" y1="50" x2="200" y2="200" style="stroke: red;stroke-width: 2"/>
+    <polygon points="600,10 540,198 690,78 510,78 660,198" id="svg"
+             style="fill:yellow;stroke:transparent;fill-rule:nonzero;"/>
+    <polygon points="600,210 540,398 690,278 510,278 660,398"
+             style="fill:lime;stroke:purple;stroke-width:5;fill-rule:nonzero;"/>
+    <polyline points="20,20 40,25 60,40 80,120 120,140 200,180" style="fill:none;stroke:black;stroke-width:3"/>
+    <path d="M150 250 L75 450 L225 450 Z" fill="none" stroke="red" stroke-width="3"/>
+</svg>
+
+<div class="movefix">
+    <span>&times</span>
+</div>
+
+<script src="scripts/jquery.min.js"></script>
+<!--<script src="bootstrap/js/bootstrap.min.js"></script>-->
+<script>
+
+    //-------------------测试碰撞的--------------------
+
+    (function () {
+        function check(obj1, obj2) {
+            var offleft = document.getElementById("q1").offsetLeft;
+            var x1 = 150 - offleft;
+            var y1 = obj1.offsetTop;
+            var w1 = obj1.scrollWidth;
+            var h1 = obj1.scrollHeight;
+            var x2 = obj2.offsetLeft;
+            var y2 = obj2.offsetTop;
+            var w2 = obj2.scrollWidth;
+            var h2 = obj2.scrollHeight;
+            if ((x1 + w1) <=x2 || (x2 + w2) <= x1 || (y1 + h1) <= y2 || (y2 + h2) <=y1) {
+                return true;                                       //不相交
+            }
+            return false;
+        }
+
+        var obj1 = document.getElementById("q2");
+        var obj2 = document.getElementById("q3");
+
+        function move(x) {
+            var Move = document.getElementById("q1");
+            var move_left = Move.offsetLeft;
+            move_left -= x;
+            Move.style.left = move_left + "px";
+        }
+
+        function animate(x) {
+            move(x);
+            check(obj1, obj2);
+            if (!check(obj1, obj2)) {
+                document.getElementById("q1").style.backgroundColor = "red";
+            } else {
+                document.getElementById("q1").style.backgroundColor = "yellow";
+            }
+        }
+
+        var left = document.getElementsByClassName("left")[0];
+        var right = document.getElementsByClassName("right")[0];
+        var pause = document.getElementsByClassName("pause")[0];
+        left.onclick = function () {
+            if (this.timer2) {
+                clearInterval(this.timer2)
+            }
+            if (right.timer1) {
+                clearInterval(right.timer1)
+            }
+            this.timer2 = setInterval(animate, 50, 1);
+        };
+        right.onclick = function () {
+            if (this.timer1) {
+                clearInterval(this.timer1)
+            }
+            if (left.timer2) {
+                clearInterval(left.timer2)
+            }
+            this.timer1 = setInterval(animate, 50, -1);
+        };
+        pause.onclick = function () {
+            if (left.timer2) {
+                clearInterval(left.timer2)
+            }
+            if (right.timer1) {
+                clearInterval(right.timer1)
+            }
+        };
+    })();
+
+    //-------------------我是分割线--------------------
+    //------------------------测试动画的--------------------------------
+    $("#move").click(function () {                           // $("#animate")[0].classList.remove("move");
+        $("#animate")[0].classList.toggle("move");          // $("#animate")[0].classList.add("move");
+    });
+
+
+    //-------------------我是分割线--------------------
+
+    //竖直手风琴效果
+    $(function () {
+        var button = $(".accordion");
+        var height = $(".panel").find("p")[0].scrollHeight;
+        button.click(function () {
+            if ($(this).hasClass("active")) {
+                $(this).removeClass("active").next().css("height", 0)
+            } else {
+                $(this).addClass("active").next().css("height", height + "px")
+            }
+        });
+    });
+    //-------------------我是分割线--------------------
+
+    //水平标签
+    $(function () {
+        $(".tablinks").click(function () {
+            var index = $(this).index();
+            $(this).addClass("active").siblings(".tablinks").removeClass("active");
+            $(".tabcontent").eq(index).show().siblings(".tabcontent").hide()
+        }).eq(0).click()
+    });
+    //-------------------我是分割线--------------------
+    //垂直标签的制作
+    $(function () {
+        $(".tab1>.tablinks").click(function () {
+            var index = $(this).index();
+            $(this).addClass("active").siblings(".tablinks").removeClass("active");
+            $(".tabcontent1").eq(index).show().siblings(".tabcontent1").hide();
+        }).eq(0).click();
+    });
+    //-------------------我是分割线--------------------
+    //搜索列表的制作
+    $(function () {                                              //删选出含有文本框的值的a标签进行隐藏
+        $("#myInput").keyup(function () {
+            var value = $(this).val();
+            $("#myUL>li>a").hide().filter(":contains('" + value + "')").show();
+        }).keyup();
+    });
+    //-------------------我是分割线--------------------
+    //do-list的制作
+
+    $(function () {
+        //动态创建span 标签
+        var $span = $("<span class='close'></span>").html("\u00D7");
+        $("#myUL1>li").append($span);
+
+        //添加新的do-list
+        function add() {
+            var text = $("#myInput1").val();
+            if (text === "") {
+                alert("你必须写点什么");
+                return;
+            }
+            var $li = $("<li></li>").html(text);
+            $("#myUL1").append($li);
+            $("#myInput1").val("");                                 //注意将 输入框的内容清空
+            $("#myUL1>li>span").detach();                           //每次添加新的li 就将里面的span标签清空 然后重新添加
+            $("#myUL1>li").append($span);                           //注意这里不能用remove   因为remove会删除绑定在span上的事件
+            bar();                                                   //因此这里用detach
+        }
+
+        $(".addBtn").click(function () {
+            add();
+        });
+        $("#myInput1").keyup(function (e) {
+            if (e.keyCode == 13) {
+                add()
+            }
+        });
+
+
+        $("#myUL1").on("click", function (e) {
+            var $target = $(e.target);                                 //注意这里全部使用用事件代理
+            if (e.target.nodeName == "LI") {
+                e.target.classList.toggle("checked");
+                bar();
+            }
+            if (e.target.className == "close") {
+//                $target.parent("li").remove();
+                $target.parent("li").css("opacity", 0);
+                setTimeout(function () {
+                    $target.parent("li").remove();
+                    bar();
+                }, 600);
+                e.stopPropagation();                                //阻止事件冒泡
+            }
+        });
+
+        //进度条
+        function bar() {
+            var perc, percent;
+            var check = $("#myUL1 .checked").length;
+            var list = $("#myUL1>li").length;
+            var num = check / list;
+            var pro_bar = $(".progress-bar")[0];
+            if (num == 1) {
+                perc = "100%"
+            } else if (num == 0) {
+                perc = "0%"
+            } else {
+                percent = num.toFixed(2);                        //转换为保留2位小数
+                perc = percent.slice(2) + "%";
+            }
+            if (num < 0.2) {
+                pro_bar.style.backgroundColor = "#f4433b"
+            } else if (num < 0.4) {
+                pro_bar.style.backgroundColor = "#f0ad4c"
+            } else if (num < 0.6) {
+                pro_bar.style.backgroundColor = "#337ab7"
+            } else if (num < 0.8) {
+                pro_bar.style.backgroundColor = "#5cb85c"
+            } else {
+                pro_bar.style.backgroundColor = "#5bc0de"
+            }
+            $(".progress-bar").css("width", perc).html(perc);
+        }
+
+        bar();
+    });
+
+    //----------------------------我是分割线--------------------
+    //       排序列表的制作
+    $(function () {
+        var $list = $("#id01>li");
+        var arr = [];
+        $list.each(function () {
+            var text = $(this).html().toLowerCase();
+            arr.push(text);
+        });
+        //排序函数
+        function sortlist(n) {                                //n小于0 为升序排列  反之为降序排列
+            if (isNaN(n) || n == 0) {
+                return;
+            }
+            arr.sort(function (x, y) {
+                return x>y? -n  : n;
+            });
+            var str = "", $list;
+            for (var i = 0; i < arr.length; i++) {
+                arr[i] = arr[i].charAt(0).toUpperCase() + arr[i].slice(1);
+                $list = '<li>' + arr[i] + '</li>';
+                str += $list;
+            }
+            $("#id01").html(str);
+        }
+
+        $("#sort1").click(function () {
+            sortlist(-1)
+        });
+        $("#sort2").click(function () {
+            sortlist(1)
+        });
+    });
+
+    //----------------------------我是分割线--------------------
+    //侧导航的制作
+    $(function () {
+        var btn = $("#slidenav>button");
+        //关闭按钮
+        $("#overlay>.closebtn").click(function () {
+            $(this).parent("div").css("width", "0");
+            return false;                                //阻止默认行为
+        });
+        btn.eq(0).click(function () {
+            $("#overlay").css("width", "20%")
+        });
+
+        $(".overlay1>.closebtn").click(function () {
+            $(this).parent("div").hide();
+            return false;                                //阻止默认行为
+        });
+        btn.eq(1).click(function () {
+            $(".overlay1").show();
+        });
+
+        $(".overlay2>.closebtn").click(function () {
+            $(this).parent("div").css("width", "0");
+            $("body").animate({
+                "marginLeft": "0"
+            }, 500);
+            return false;                                //阻止默认行为
+        });
+        btn.eq(2).click(function () {
+            $(".overlay2").css("width", "20%");
+            $("body").animate({
+                "marginLeft": "20%"
+            }, 500)
+        });
+        $(".overlay3>.closebtn").click(function () {
+            $(this).parent("div").css("width", "0");
+            return false;                                //阻止默认行为
+        });
+        btn.eq(3).click(function () {
+            $(".overlay3").css("width", "100%").css("backgroundColor", "rgba(0,0,0,0.9)");
+        })
+    });
+
+    //----------------------------显示小吃店--------------------
+    $(function () {
+        var bar=$("#snackbar");
+        bar.prev().click(function () {
+            if (bar.hasClass("show")) {
+                return false;
+            }
+            bar.addClass("show");
+            setTimeout(function () {
+                bar.removeClass("show");
+            }, 3000)
+        });
+    });
+    /*-----------------------nav-fix-------------------------------*/
+    $(function () {
+//        $(document).scroll(function () {
+//            var top = $(this).scrollTop() + 100;                    //注意这里用$("body").scroll()不能触发scroll事件
+//            $(".movefix").css("top", top + "px")
+//        });
+        document.body.onscroll=function(){
+            var top=document.body.scrollTop+100;
+            document.querySelectorAll(".movefix")[0].style.top=top+"px";
+        };
+
+        $(".movefix>span").on("click", function () {
+            $(this).parent().hide();
+            $(document).unbind();
+        })
+    });
+
+
+
+
+</script>
+</body>
+</html>
